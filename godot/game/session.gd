@@ -67,6 +67,13 @@ func _add_solid(rect: Rect2) -> void:
 	body.add_child(collision)
 	add_child(body)
 
+func _spike_points(size: Vector2, index: int) -> PackedVector2Array:
+	# One spike silhouette, in coordinates relative to the hazard rect's own
+	# origin. _draw() and _add_area() both call this, so a hazard on a raised step
+	# cannot be painted at one height and kill at another.
+	var x := float(index) * size.x / 3.0
+	return PackedVector2Array([Vector2(x, size.y), Vector2(x + 4.0, 0.0), Vector2(x + 8.0, size.y)])
+
 func _add_area(rect: Rect2, layer: int, spikes: bool) -> Area2D:
 	var area := Area2D.new()
 	area.position = rect.position
@@ -76,8 +83,7 @@ func _add_area(rect: Rect2, layer: int, spikes: bool) -> Area2D:
 		# Three exact triangular trigger silhouettes; no oversized invisible box.
 		for i in range(3):
 			var triangle := CollisionPolygon2D.new()
-			var x := float(i) * rect.size.x / 3.0
-			triangle.polygon = PackedVector2Array([Vector2(x, rect.size.y), Vector2(x + 4, 0), Vector2(x + 8, rect.size.y)])
+			triangle.polygon = _spike_points(rect.size, i)
 			area.add_child(triangle)
 	else:
 		var collision := CollisionShape2D.new()
@@ -182,11 +188,13 @@ func _draw() -> void:
 	var font := ThemeDB.fallback_font
 	var ink := Color("25354a")
 	# All visual assets are original Godot vector drawing, not recovered art.
-	draw_rect(Rect2(-400, -200, 1800, 900), Color("f6f3ec"))
-	for x in range(0, 961, 32):
+	var width := float(level.width)
+	# Backdrop: 400px of margin left of the world, 440 right of it.
+	draw_rect(Rect2(-400, -200, width + 440.0, 900), Color("f6f3ec"))
+	for x in range(0, int(width) + 1, 32):
 		draw_line(Vector2(x, 80), Vector2(x, 320), Color("e7e5df"), 1)
 	for y in range(96, 321, 32):
-		draw_line(Vector2(0, y), Vector2(960, y), Color("e7e5df"), 1)
+		draw_line(Vector2(0, y), Vector2(width, y), Color("e7e5df"), 1)
 	for x in [100, 470, 770]:
 		draw_colored_polygon(PackedVector2Array([Vector2(x-90,320),Vector2(x+50,180),Vector2(x+190,320)]), Color("e4e8e3"))
 	for entry in level.solids:
@@ -196,13 +204,19 @@ func _draw() -> void:
 		for x in range(int(r.position.x)+12, int(r.end.x), 24):
 			draw_line(Vector2(x, r.position.y+12), Vector2(x+7, r.position.y+19), Color("405166"), 1)
 	for entry in level.hazards:
+		var hazard := Rect2(entry[0], entry[1], entry[2], entry[3])
+		draw_set_transform(hazard.position)
 		for i in range(3):
-			var x: float = entry[0] + i*8
-			draw_colored_polygon(PackedVector2Array([Vector2(x,320),Vector2(x+4,304),Vector2(x+8,320)]), Color("d24e42"))
-	var finish_x: float = level.finish[0]
-	draw_line(Vector2(finish_x+3, 320), Vector2(finish_x+3, 250), ink, 3)
-	draw_colored_polygon(PackedVector2Array([Vector2(finish_x+5,250),Vector2(finish_x+32,260),Vector2(finish_x+5,274)]), Color("287c68"))
+			draw_colored_polygon(_spike_points(hazard.size, i), Color("d24e42"))
+		draw_set_transform(Vector2.ZERO)
+	var f: Array = level.finish
+	var finish := Rect2(f[0], f[1], f[2], f[3])
+	# The pole stands on the finish rect and rises 14px above it; the flag hangs
+	# from the top. Both follow the rect, so the flag cannot float or bury itself.
+	var pole_top := finish.position.y - 14.0
+	draw_line(Vector2(finish.position.x + 3.0, finish.end.y), Vector2(finish.position.x + 3.0, pole_top), ink, 3)
+	draw_colored_polygon(PackedVector2Array([Vector2(finish.position.x + 5.0, pole_top), Vector2(finish.position.x + 32.0, pole_top + 10.0), Vector2(finish.position.x + 5.0, pole_top + 24.0)]), Color("287c68"))
 	draw_string(font, Vector2(33, 251), "01 / GET MOVING", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
 	draw_string(font, Vector2(33, 273), "Read the landing. Then jump.", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ink)
 	draw_string(font, Vector2(474, 227), "02 / MIND THE GAP", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
-	draw_string(font, Vector2(878, 225), "FINISH", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
+	draw_string(font, Vector2(finish.position.x - 38.0, pole_top - 25.0), "FINISH", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
