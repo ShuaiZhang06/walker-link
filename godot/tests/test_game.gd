@@ -30,9 +30,9 @@ func fresh() -> void:
 	game.player.test_control = true
 	await steps(3)
 
-## One input-driven Section 03 trial: stand on P1 at `start`, hold right, jump on
-## the first tick past `mark`, and report where the body comes to rest. The player
-## is placed once, before the run; nothing is repositioned in flight.
+## One input-driven Section 03 trial: stand at `start`, hold right, jump on the
+## first tick past `mark`, and report where the body comes to rest. The player is
+## placed once, before the run; nothing is repositioned in flight.
 func takeoff_trial(start: Vector2, mark: float) -> Dictionary:
 	await fresh()
 	game.player.position = start
@@ -50,10 +50,11 @@ func takeoff_trial(start: Vector2, mark: float) -> Dictionary:
 		airborne = airborne or (jumped and not game.player.is_on_floor())
 		var resting: bool = airborne and game.player.is_on_floor()
 		if game.state != Game.State.PLAYING or resting:
-			return {"landed": resting and game.state == Game.State.PLAYING, "mark": mark,
+			return {"landed": resting and game.state == Game.State.PLAYING,
+				"died": game.state == Game.State.DYING, "mark": mark,
 				"takeoff_vx": snappedf(takeoff_vx, 0.1), "x": snappedf(game.player.position.x, 0.01),
 				"y": snappedf(game.player.position.y, 0.01)}
-	return {"landed": false, "mark": mark, "takeoff_vx": snappedf(takeoff_vx, 0.1),
+	return {"landed": false, "died": false, "mark": mark, "takeoff_vx": snappedf(takeoff_vx, 0.1),
 		"x": snappedf(game.player.position.x, 0.01), "y": snappedf(game.player.position.y, 0.01)}
 
 func run() -> void:
@@ -151,7 +152,7 @@ func run() -> void:
 	game.player.position = Vector2(415,432)
 	await steps(1)
 	check("fall-boundary", game.state == Game.State.DYING, {"state":game.state})
-	# --- Section 03: the spike step, the fork, and the far plateau ---
+	# --- Section 03: the spiked step, the high stone, the far platform ---
 	await fresh()
 	var art_ok := true
 	var spike_bases: Array = []
@@ -168,38 +169,48 @@ func run() -> void:
 			art_ok = art_ok and is_equal_approx((area.position + triangle.polygon[0]).y, rect.end.y)
 			art_ok = art_ok and is_equal_approx((area.position + triangle.polygon[1]).y, rect.position.y)
 		spike_bases.append(rect.end.y)
-	check("hazard-art-matches-trigger", art_ok, {"spike_base_y": spike_bases})
+	# Second hazard's base is the step's top (304), not the ground (320).
+	check("hazard-art-matches-trigger", art_ok and spike_bases == [320.0, 304.0], {"spike_base_y": spike_bases})
 	await fresh()
-	game.player.position = Vector2(1060, 288)
+	game.player.position = Vector2(1060, 320)
 	game.player.test_axis = 0.0
 	await steps(30)
-	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 288.0) < 0.2, {"position":str(game.player.position), "clearance_px":1088-(1060+9)})
+	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "clearance_px":1100-(1060+9)})
+	# Walking into the step's side is a wall, not a death: the spikes are inset 4px
+	# from the block's edges, so a blocked body never touches a trigger.
 	game.player.test_axis = 1.0
-	var spike_death_x := 0.0
-	for i in range(40):
-		await steps(1)
-		if game.state == Game.State.DYING:
-			spike_death_x = game.player.position.x
-			break
-	check("step-spike-kills", game.state == Game.State.DYING, {"death_x":snappedf(spike_death_x,0.01), "spikes":"1088..1112 on P1 at y 272..288"})
-	var high_route: Dictionary = await takeoff_trial(Vector2(1130, 288), 1166.0)
-	check("route-a-high-ledge", bool(high_route["landed"]) and absf(float(high_route["y"]) - 248.0) < 0.2 and float(high_route["x"]) > 1240.0 and float(high_route["x"]) < 1280.0, high_route)
-	# Sweep the whole take-off strip left of P1's edge: which of the two stones
-	# does the fork actually hand out, and at which take-off?
-	var fork := {"high_ledge_248":0, "low_stone_304":0, "fell":0, "high_marks":[], "low_marks":[]}
-	for mark in [1130.0, 1138.0, 1146.0, 1154.0, 1162.0, 1170.0, 1176.0]:
-		var trial: Dictionary = await takeoff_trial(Vector2(1128, 288), mark)
-		if bool(trial["landed"]) and absf(float(trial["y"]) - 248.0) < 0.2:
-			fork["high_ledge_248"] += 1
-			fork["high_marks"].append(mark)
-		elif bool(trial["landed"]) and absf(float(trial["y"]) - 304.0) < 0.2:
-			fork["low_stone_304"] += 1
-			fork["low_marks"].append(mark)
+	await steps(40)
+	check("step-blocks-the-walk", game.state == Game.State.PLAYING and absf(game.player.position.x - 1087.0) < 1.0 and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "step_face_x":1096})
+	# The step must be jumped over, never stood on: sweep the hop's take-off range
+	# and count how many trials come to rest on the step's surface (y = 304).
+	var hop := {"cleared":0, "died":0, "stood_on_step":0, "cleared_marks":[], "died_marks":[]}
+	for mark in [1036.0, 1044.0, 1052.0, 1060.0, 1068.0, 1076.0]:
+		var trial: Dictionary = await takeoff_trial(Vector2(1020, 320), mark)
+		if bool(trial["landed"]) and absf(float(trial["y"]) - 304.0) < 0.2:
+			hop["stood_on_step"] += 1
+		elif bool(trial["landed"]):
+			hop["cleared"] += 1
+			hop["cleared_marks"].append(mark)
 		else:
-			fork["fell"] += 1
-	check("p1-takeoff-sweep", fork["high_ledge_248"] + fork["low_stone_304"] > 0, fork)
+			hop["died"] += 1
+			hop["died_marks"].append(mark)
+	check("step-is-jumped-not-stood-on", hop["stood_on_step"] == 0 and hop["cleared"] >= 3 and hop["died"] >= 1, hop)
+	var stone: Dictionary = await takeoff_trial(Vector2(1150, 320), 1200.0)
+	check("high-stone-reachable", bool(stone["landed"]) and absf(float(stone["y"]) - 280.0) < 0.2 and float(stone["x"]) > 1272.0 and float(stone["x"]) < 1312.0, stone)
+	# The stone is the only way across the 144px chasm, and only from the last
+	# stretch of ground: an early take-off falls instead of clearing it.
+	var reach := {"on_stone":0, "fell":0, "stone_marks":[], "fell_marks":[]}
+	for mark in [1150.0, 1162.0, 1174.0, 1186.0, 1198.0, 1210.0, 1222.0]:
+		var trial: Dictionary = await takeoff_trial(Vector2(1140, 320), mark)
+		if bool(trial["landed"]) and absf(float(trial["y"]) - 280.0) < 0.2:
+			reach["on_stone"] += 1
+			reach["stone_marks"].append(mark)
+		else:
+			reach["fell"] += 1
+			reach["fell_marks"].append(mark)
+	check("stone-takeoff-sweep", reach["on_stone"] > 0 and reach["fell"] > 0, reach)
 	await fresh()
-	game.player.position = Vector2(1450, 288)
+	game.player.position = Vector2(1450, 320)
 	await steps(3)
 	var plateau_camera: float = game.camera.position.x
 	game.player.position = Vector2(1450, 432)
