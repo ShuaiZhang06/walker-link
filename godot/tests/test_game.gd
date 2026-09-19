@@ -30,6 +30,32 @@ func fresh() -> void:
 	game.player.test_control = true
 	await steps(3)
 
+## One input-driven Section 03 trial: stand on P1 at `start`, hold right, jump on
+## the first tick past `mark`, and report where the body comes to rest. The player
+## is placed once, before the run; nothing is repositioned in flight.
+func takeoff_trial(start: Vector2, mark: float) -> Dictionary:
+	await fresh()
+	game.player.position = start
+	game.player.test_axis = 1.0
+	await steps(3)
+	var jumped := false
+	var airborne := false
+	var takeoff_vx := 0.0
+	for i in range(140):
+		if not jumped and game.player.position.x >= mark and game.player.is_on_floor():
+			game.player.test_jump_pressed = true
+			jumped = true
+			takeoff_vx = game.player.velocity.x
+		await steps(1)
+		airborne = airborne or (jumped and not game.player.is_on_floor())
+		var resting: bool = airborne and game.player.is_on_floor()
+		if game.state != Game.State.PLAYING or resting:
+			return {"landed": resting and game.state == Game.State.PLAYING, "mark": mark,
+				"takeoff_vx": snappedf(takeoff_vx, 0.1), "x": snappedf(game.player.position.x, 0.01),
+				"y": snappedf(game.player.position.y, 0.01)}
+	return {"landed": false, "mark": mark, "takeoff_vx": snappedf(takeoff_vx, 0.1),
+		"x": snappedf(game.player.position.x, 0.01), "y": snappedf(game.player.position.y, 0.01)}
+
 func run() -> void:
 	await fresh()
 	check("launch-grounded", game.player.is_on_floor() and game.state == Game.State.PLAYING, {"position": str(game.player.position), "engine": Engine.get_version_info().string})
@@ -125,6 +151,62 @@ func run() -> void:
 	game.player.position = Vector2(415,432)
 	await steps(1)
 	check("fall-boundary", game.state == Game.State.DYING, {"state":game.state})
+	# --- Section 03: the spike step, the fork, and the far plateau ---
+	await fresh()
+	var art_ok := true
+	var spike_bases: Array = []
+	for h in range(game.hazard_areas.size()):
+		var entry: Array = game.level.hazards[h]
+		var rect := Rect2(entry[0], entry[1], entry[2], entry[3])
+		var area: Area2D = game.hazard_areas[h]
+		art_ok = art_ok and area.position == rect.position and area.get_child_count() == 3
+		for i in range(area.get_child_count()):
+			var triangle: CollisionPolygon2D = area.get_child(i)
+			# _draw() paints _spike_points(size, i) under the same origin, so equal
+			# points here means the painted triangle is the triangle that kills.
+			art_ok = art_ok and triangle.polygon == game._spike_points(rect.size, i)
+			art_ok = art_ok and is_equal_approx((area.position + triangle.polygon[0]).y, rect.end.y)
+			art_ok = art_ok and is_equal_approx((area.position + triangle.polygon[1]).y, rect.position.y)
+		spike_bases.append(rect.end.y)
+	check("hazard-art-matches-trigger", art_ok, {"spike_base_y": spike_bases})
+	await fresh()
+	game.player.position = Vector2(1060, 288)
+	game.player.test_axis = 0.0
+	await steps(30)
+	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 288.0) < 0.2, {"position":str(game.player.position), "clearance_px":1088-(1060+9)})
+	game.player.test_axis = 1.0
+	var spike_death_x := 0.0
+	for i in range(40):
+		await steps(1)
+		if game.state == Game.State.DYING:
+			spike_death_x = game.player.position.x
+			break
+	check("step-spike-kills", game.state == Game.State.DYING, {"death_x":snappedf(spike_death_x,0.01), "spikes":"1088..1112 on P1 at y 272..288"})
+	var high_route: Dictionary = await takeoff_trial(Vector2(1130, 288), 1166.0)
+	check("route-a-high-ledge", bool(high_route["landed"]) and absf(float(high_route["y"]) - 248.0) < 0.2 and float(high_route["x"]) > 1240.0 and float(high_route["x"]) < 1280.0, high_route)
+	# Sweep the whole take-off strip left of P1's edge: which of the two stones
+	# does the fork actually hand out, and at which take-off?
+	var fork := {"high_ledge_248":0, "low_stone_304":0, "fell":0, "high_marks":[], "low_marks":[]}
+	for mark in [1130.0, 1138.0, 1146.0, 1154.0, 1162.0, 1170.0, 1176.0]:
+		var trial: Dictionary = await takeoff_trial(Vector2(1128, 288), mark)
+		if bool(trial["landed"]) and absf(float(trial["y"]) - 248.0) < 0.2:
+			fork["high_ledge_248"] += 1
+			fork["high_marks"].append(mark)
+		elif bool(trial["landed"]) and absf(float(trial["y"]) - 304.0) < 0.2:
+			fork["low_stone_304"] += 1
+			fork["low_marks"].append(mark)
+		else:
+			fork["fell"] += 1
+	check("p1-takeoff-sweep", fork["high_ledge_248"] + fork["low_stone_304"] > 0, fork)
+	await fresh()
+	game.player.position = Vector2(1450, 288)
+	await steps(3)
+	var plateau_camera: float = game.camera.position.x
+	game.player.position = Vector2(1450, 432)
+	await steps(1)
+	var died_on_plateau: bool = game.state == Game.State.DYING
+	await steps(38)
+	check("plateau-death-respawn", died_on_plateau and game.state == Game.State.PLAYING and game.player.position.distance_to(Vector2(64,320)) < 1 and is_equal_approx(game.camera.position.x, 320.0) and is_equal_approx(plateau_camera, float(game.level.width) - 320.0), {"camera_on_plateau":plateau_camera, "camera_after_respawn":game.camera.position.x, "position":str(game.player.position)})
 	await fresh()
 	var route = Route.new()
 	var route_ticks := 0
@@ -132,7 +214,10 @@ func run() -> void:
 		route.step(game.player)
 		await steps(1)
 		route_ticks += 1
-	check("complete-real-route", game.state == Game.State.COMPLETE and game.deaths == 0, {"state":game.state,"deaths":game.deaths,"ticks":route_ticks,"position":str(game.player.position),"jump_marks_used":route.next_jump})
+	var f: Array = game.level.finish
+	var finish_rect := Rect2(f[0], f[1], f[2], f[3])
+	var body := Rect2(game.player.position.x - 9.0, game.player.position.y - 28.0, 18, 28)
+	check("complete-real-route", game.state == Game.State.COMPLETE and game.deaths == 0 and body.intersects(finish_rect), {"state":game.state,"deaths":game.deaths,"ticks":route_ticks,"position":str(game.player.position),"jump_marks_used":route.next_jump,"finish_rect":str(finish_rect)})
 	game.start_session()
 	game.start_session()
 	check("replay-idempotent", game.state == Game.State.PLAYING and game.deaths == 0 and game.player.jumps == 0, {"state":game.state,"deaths":game.deaths,"jumps":game.player.jumps})
