@@ -227,4 +227,6 @@ func _draw() -> void:
 	draw_string(font, Vector2(33, 251), "01 / GET MOVING", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
 	draw_string(font, Vector2(33, 273), "Read the landing. Then jump.", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ink)
 	draw_string(font, Vector2(474, 227), "02 / MIND THE GAP", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
+	draw_string(font, Vector2(966, 227), "03 / STEP AND STONE", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)
+	draw_string(font, Vector2(966, 249), "Jump the step. Then the stone.", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ink)
 	draw_string(font, Vector2(finish.position.x - 38.0, pole_top - 25.0), "FINISH", HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ink)

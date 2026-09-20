@@ -192,3 +192,98 @@ new case that dies on the plateau and asserts the respawn position and camera x.
 *(Append only. Original predictions above are never rewritten.)*
 
 - **2026-09-17** — Initial brief written before any implementation.
+
+- **2026-09-18 — Step A, character.** `player.gd::_draw()` replaced; `_ready()`,
+  `_physics_process` and `tuning.gd` untouched. Three defects found by looking at the
+  rendered plates, not by reasoning: the cap-tail covered the ear, the sword was invisible
+  against the light backdrop, and the airborne pose was identical to standing (the brief's
+  "legs tuck" was wrong — the stride term going to 0 leaves the legs at *full* length, so an
+  explicit `tuck` was added). Measured prop overhang: sword tip **4.5px**, shield 3.5px,
+  crossguard 1.42px — all inside the ≤5px commitment of §1. Checks 25/0 and 9/0. Added
+  `tests/capture_character.gd`, a repeatable pose sheet with the 18x28 collider outlined.
+  After playtesting the human asked for a pointed blade; the flat blade became a five-point
+  tapered polygon (F6 remains a human judgment and is still open).
+
+- **2026-09-18 — Step B, drawing parameterized.** Backdrop, grid, spikes, finish pole and the
+  HUD denominator derived from `level.width` / the rects instead of 1800 / 961 / 960 / 320 /
+  250 / 878 / 852. `_spike_points()` became the single source for a spike silhouette, used by
+  both `_draw()` and `_add_area()`. Verified as a pure refactor: with the JSON unchanged, the
+  level plates came out byte-identical. Two literals deliberately survived — the hill row
+  (irregular by hand) and the section labels (copy) — and were handed to steps C and D.
+
+- **2026-09-19 — Step C, first implementation, exactly as §2 predicted.** width 1600, P1 spike
+  stair `[1008,288,176,32]`, H2 on its surface, P2H/P2L fork, plateau, finish at
+  `[1540,232,24,56]`; route marks 932/1048/1166/1260; 31 checks / 0 failures.
+  **F4 held:** P2H is reachable input-only, landing `(1251.95, 247.93)`.
+  **F8 happened, and it is fatal to §2's central claim:** sweeping seven take-offs across P1's
+  strip gives 5 landings on the high ledge, **0 on the low stone**, 2 falls. The two-route
+  decision of §2 does not exist. The cause is geometric, not tuning: from P1 the arc returns to
+  the high ledge's height 80px of travel out and to the low stone's height at 114px, only 34px
+  apart, while P1's usable take-off strip is 40px wide — P2H intercepts every attempt. P2L was
+  also a trap (12px of headroom under P2H: jumping from it bonks the ceiling and drops back, or
+  falls into the chasm). **§2's "precision-at-height versus precision-at-distance" is withdrawn.**
+
+- **2026-09-19 — Step C, revised after review: the section is rebuilt.** The human's reading of
+  "a spike stair" was a short step standing on flat ground that must be *jumped over*, not a
+  raised stretch of floor with spikes on top, and they asked for a single stone instead of the
+  fork. All walkable ground in Section 03 is now y=320, the same height as the starter's. The
+  spikes sit on a block standing on that ground, inset 4px on each side so a body blocked by
+  the block's side cannot touch a trigger. **Machine-checked:** six take-offs across the hop
+  range land on the step **zero** times — it cannot be used as footing.
+
+- **2026-09-19 — Step C, three further revisions on review.** (1) The entry pit was removed:
+  Section 03's ground runs on from the starter's last platform, so the section has exactly one
+  fall pit, the 144px chasm. Route marks dropped from 9 to 8. (2) The step was raised to 40px
+  of obstacle (24 block + 16 spike). **My own prediction was wrong here and the measurement
+  corrected it:** the continuous-arc formula said the safe take-off window would shrink to
+  ~11px, but it measured **24px (about 9 ticks)** — the spikes are triangles, so near both ends
+  their outline is far below the apex and a body clears them earlier and later than a
+  24x40 box would allow. (3) Both flat stretches around the step were cut: the step moved to
+  992 and the ground from 272px to 152px, the stone, the platform and the finish moved left
+  with it, and **the world shrank from 1600 to 1480** — the brief's §3.1 "960 → 1600" now reads
+  960 → 1480.
+
+- **2026-09-19 — Section 03 as built.** ground `[960,320,152,64]`, spiked step `[992,296,32,24]`
+  with hazard `[996,280,24,16]`, high stone `[1152,280,40,16]`, far platform `[1256,320,224,64]`,
+  finish `[1420,264,24,56]`. Measured windows, input-driven, no position edits in flight:
+  step hop take-off **940.6–964.6** (early lands on the far slope, late hits the front); high
+  stone take-off **1061–1103** (1058 and earlier hits the stone's left face and falls); the chain
+  between them leaves **26–51px, 10–19 ticks**, between landing the hop and the next take-off.
+  The chasm is 144px against a **112px** measured maximum leap, so the stone is the only way
+  across. Three required jumps in the section, against the required minimum of two.
+
+- **2026-09-19 — predicted failures, settled.** F1: `hazard-art-matches-trigger` asserts both
+  hazards' painted triangles are their trigger polygons and that H2's base is the step's top
+  (296), not the ground — ghost spikes cannot happen. F2: the backdrop, grid and right wall
+  follow `level.width`; `level-00.png` stayed byte-identical while the world grew. F3: the pole
+  and flag follow the finish rect, and `complete-real-route` now asserts the body overlaps the
+  finish rect, not merely that the state is COMPLETE. F5: the route fixture reaches the new
+  finish using all 8 marks in 514 ticks with 0 deaths. F7: `plateau-death-respawn` dies on the
+  far platform and asserts respawn at `(64,320)` with the camera back at 320 from `width-320`.
+  F4 and F8 are recorded above. **F6 is the one prediction no machine settled** — whether the
+  sword and shield read as props rather than hitbox is still a human judgment.
+
+- **2026-09-19 — hills, two reversals.** Appending to the starter's hand-placed hills
+  (100/470/770) produced a pair that overlapped in front of the finish, because each hill is
+  280px wide and the appended spacing was 230. Deriving the whole row from an even 320 spacing
+  fixed it but moved two of the starter's own hills, which made the original section's backdrop
+  differ for the first time; the human rejected that trade. Final: hand-placed
+  `[100, 470, 770, 1290]`, the starter's three exactly as they were, and one whole 280px hill at
+  1200..1480 whose right foot lands on the world's edge so the flag is not backed by a hill the
+  screen cuts in half. Verified by diffing against the pre-hill commit: `01-menu`, `02-failure`,
+  `03-jump` and `level-00.png` are byte-identical. Cost, accepted: 960..1200 has no hill,
+  because only one 280px hill fits between the starter's last one and the world's edge. The
+  Section 03 label now occupies that space.
+
+- **2026-09-19 — Step D, copy and evidence.** In-game title `WALKER / JUMPMAN` → **`WALKER /
+  LINK`** and `project.godot config/name` → `walker-link` (human request). Section label
+  "03 / STEP AND STONE" + "Jump the step. Then the stone." added at (966, 227/249); the menu
+  line became "Two gaps, a spiked step, a stone, then the flag.", which the old copy no longer
+  described. New check `hud-copy-fits-its-card` measures all thirteen HUD strings against the
+  boxes they are centred in (tightest is the new menu line at 269px of a 302px limit), so copy
+  can no longer silently overflow a card. Evidence re-shot: four game frames, three level
+  plates, four character plates; `node scripts/record-build.cjs` re-recorded 26 source hashes
+  and 43 machine checks. **Final state: `test_game.gd` 34 checks / 0 failures,
+  `test_keyboard.gd` 9 / 0, scripted route COMPLETE with 0 deaths.** `tuning.gd` was never
+  touched, the collider was never touched, and the starter's five solids, ground hazard and
+  spawn keep their exact coordinates.

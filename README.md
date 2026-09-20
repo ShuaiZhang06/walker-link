@@ -1,16 +1,18 @@
-# walker-jumpman — First Steps
+# walker-link — First Steps
 
 **Playable source prototype · September 10, 2026 · Godot 4.7.2 / GDScript**
 
+**Fork note.** `walker-link` is a coursework fork of [nikbearbrown/walker-jumpman](https://github.com/nikbearbrown/walker-jumpman) by Shuai Zhang. Two things differ from the starter: the player is drawn as a Link-styled adventurer instead of the starter's five-rectangle figure, and the level gains Section 03, which extends the world from 960 to 1480 pixels. Movement tuning, the collider, the controls, the retry loop and the original section's geometry are unchanged. What changed, what it cost and what was measured is recorded in [CHANGE-BRIEF.md](CHANGE-BRIEF.md). Everything else on this page, and every other document in this repository, is the starter author's work and describes the starter's own September 10 build.
+
 Standalone game repository: [nikbearbrown/walker-jumpman](https://github.com/nikbearbrown/walker-jumpman). This checkout contains only this game's source, design package, and test evidence—not the Walker toolkit, Brutalist, or video renders.
 
-Clone with `git clone https://github.com/nikbearbrown/walker-jumpman.git`, then import `walker-jumpman/godot/project.godot` in the regular Godot editor. No .NET runtime or external assets are required. On macOS, the launcher below also works when Godot is installed in Applications; on other platforms, use the editor or `godot --path godot` from the cloned folder.
+Clone this fork with `git clone https://github.com/ShuaiZhang06/walker-link.git`, then import `walker-link/godot/project.godot` in the regular Godot editor. No .NET runtime or external assets are required. On macOS, the launcher below also works when Godot is installed in Applications; on other platforms, use the editor or `godot --path godot` from the cloned folder.
 
 Double-click [walker-jumpman.command](walker-jumpman.command) to play. Press **Enter** to start; **A/D or arrows** to move, **Space** to jump, **R** to retry, and **Escape/P** to pause. Reach the flag. Retries are unlimited.
 
 ![The actual First Steps game, captured during a scripted jump](evidence/screens/03-jump.png)
 
-This simple level has two steps, two gaps, one spike hazard, and a finish. It is the control/retry slice, not the full three-zone/cherry design below. See [build results and limitations](BUILD-REPORT.md). To edit, import [godot/project.godot](godot/project.godot) into Godot.
+This simple level has two small ledges, two gaps, a spiked step to jump over, a high stone across a 144-pixel chasm, two spike hazards, and a finish. It is the control/retry slice, not the full three-zone/cherry design below. See [build results and limitations](BUILD-REPORT.md). To edit, import [godot/project.godot](godot/project.godot) into Godot.
 
 The first Walker example is a compact 2D platformer built around readable jumps, optional cherries and quick retries. Every new game project uses the `walker-` prefix. The original `jumping-man-godot` recovery collection remains separate and unchanged; it is not included or required here. Historical design references to sibling recovery files refer to the author's local source collection, not files shipped in this repository.
 

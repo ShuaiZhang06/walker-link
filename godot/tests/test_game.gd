@@ -234,6 +234,23 @@ func run() -> void:
 	var died_on_plateau: bool = game.state == Game.State.DYING
 	await steps(38)
 	check("plateau-death-respawn", died_on_plateau and game.state == Game.State.PLAYING and game.player.position.distance_to(Vector2(64,320)) < 1 and is_equal_approx(game.camera.position.x, 320.0) and is_equal_approx(plateau_camera, float(game.level.width) - 320.0), {"camera_on_plateau":plateau_camera, "camera_after_respawn":game.camera.position.x, "position":str(game.player.position)})
+	# Presentation: every string the HUD centres has to fit the box it is centred
+	# in, or the copy runs off the card. Limits are the drawn rects minus padding.
+	var font := ThemeDB.fallback_font
+	var copy_fits := true
+	var widest := ["", 0.0, 0.0]
+	for entry in [["WALKER / LINK", 18, 467.0], ["A/D or arrows: move     Space: jump     R: retry     Esc: pause", 13, 596.0],
+			["First steps. Real jumps.", 24, 302.0], ["Two gaps, a spiked step, a stone, then the flag.", 12, 302.0],
+			["One jump. No double jump. Unlimited retries.", 12, 302.0], ["Take a breath.", 24, 302.0],
+			["R: restart attempt    M: main menu", 12, 302.0], ["Course complete.", 24, 302.0],
+			["99.9 seconds   /   99 retries", 12, 302.0], ["ENTER  /  PLAY AGAIN", 14, 184.0],
+			["Missed the landing", 21, 264.0], ["Watch the spikes", 21, 264.0],
+			["Back at the start in a moment.", 13, 264.0]]:
+		var used: float = font.get_string_size(entry[0], HORIZONTAL_ALIGNMENT_LEFT, -1, entry[1]).x
+		copy_fits = copy_fits and used <= float(entry[2])
+		if used / float(entry[2]) > widest[2]:
+			widest = [entry[0], snappedf(used, 0.1), snappedf(used / float(entry[2]), 0.001)]
+	check("hud-copy-fits-its-card", copy_fits, {"tightest_string": widest[0], "width_px": widest[1], "fraction_of_limit": widest[2]})
 	await fresh()
 	var route = Route.new()
 	var route_ticks := 0

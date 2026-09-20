@@ -1,5 +1,11 @@
 # First Steps — playable slice
 
+> **Fork note (walker-link).** This report is the starter author's record of their own
+> September 10 build and is left as written. It describes a 960-pixel level with the starter's
+> character; this fork replaces the character drawing and extends the world to 1480 pixels.
+> The fork's changes, measurements and revisions are in [CHANGE-BRIEF.md](CHANGE-BRIEF.md), and
+> [the build manifest](evidence/build-manifest.json) always records the current source.
+
 Built September 10, 2026 under Bear's request: **“Build a simple level for walker-jumpman.”** This is the small control/retry prototype, not the full three-zone, twenty-cherry GDD or a public game release.
 
 ## What is implemented
