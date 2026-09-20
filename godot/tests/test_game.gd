@@ -172,20 +172,20 @@ func run() -> void:
 	# Second hazard's base is the step's top (296), not the ground (320).
 	check("hazard-art-matches-trigger", art_ok and spike_bases == [320.0, 296.0], {"spike_base_y": spike_bases})
 	await fresh()
-	game.player.position = Vector2(1060, 320)
+	game.player.position = Vector2(988, 320)
 	game.player.test_axis = 0.0
 	await steps(30)
-	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "clearance_px":1100-(1060+9)})
+	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "clearance_px":1028-(988+9)})
 	# Walking into the step's side is a wall, not a death: the spikes are inset 4px
 	# from the block's edges, so a blocked body never touches a trigger.
 	game.player.test_axis = 1.0
 	await steps(40)
-	check("step-blocks-the-walk", game.state == Game.State.PLAYING and absf(game.player.position.x - 1087.0) < 1.0 and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "step_face_x":1096})
+	check("step-blocks-the-walk", game.state == Game.State.PLAYING and absf(game.player.position.x - 1015.0) < 1.0 and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "step_face_x":1024})
 	# The step must be jumped over, never stood on: sweep the hop's take-off range
 	# and count how many trials come to rest on the step's surface (y = 296).
 	var hop := {"cleared":0, "died":0, "stood_on_step":0, "cleared_marks":[], "died_marks":[]}
-	for mark in [1040.0, 1046.0, 1052.0, 1058.0, 1064.0, 1070.0]:
-		var trial: Dictionary = await takeoff_trial(Vector2(1020, 320), mark)
+	for mark in [964.0, 972.0, 978.0, 984.0, 990.0, 998.0]:
+		var trial: Dictionary = await takeoff_trial(Vector2(920, 320), mark)
 		if bool(trial["landed"]) and absf(float(trial["y"]) - 296.0) < 0.2:
 			hop["stood_on_step"] += 1
 		elif bool(trial["landed"]):
