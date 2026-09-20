@@ -171,6 +171,17 @@ func run() -> void:
 		spike_bases.append(rect.end.y)
 	# Second hazard's base is the step's top (296), not the ground (320).
 	check("hazard-art-matches-trigger", art_ok and spike_bases == [320.0, 296.0], {"spike_base_y": spike_bases})
+	var hills: PackedFloat32Array = game._hill_origins()
+	var hill_gaps: Array = []
+	var hills_ok: bool = hills.size() >= 2
+	for i in range(1, hills.size()):
+		var gap: float = hills[i] - hills[i - 1]
+		hill_gaps.append(gap)
+		# Even spacing, and wider than a hill's own 280px base, so none overlap.
+		hills_ok = hills_ok and is_equal_approx(gap, hills[1] - hills[0]) and gap >= 280.0
+	# The row still reaches the world's right edge: no bare strip before the flag.
+	hills_ok = hills_ok and hills[hills.size() - 1] + 190.0 >= float(game.level.width)
+	check("hill-row-even-and-clear", hills_ok, {"origins": Array(hills), "gaps": hill_gaps})
 	await fresh()
 	game.player.position = Vector2(956, 320)
 	game.player.test_axis = 0.0

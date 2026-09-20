@@ -3,6 +3,7 @@ extends Node2D
 const Player = preload("res://features/player/player.gd")
 const Hud = preload("res://ui/hud.gd")
 enum State { MENU, PLAYING, PAUSED, DYING, COMPLETE }
+const HILL_SPACING := 320.0
 var state: State = State.MENU
 var player: CharacterBody2D
 var camera: Camera2D
@@ -73,6 +74,19 @@ func _spike_points(size: Vector2, index: int) -> PackedVector2Array:
 	# cannot be painted at one height and kill at another.
 	var x := float(index) * size.x / 3.0
 	return PackedVector2Array([Vector2(x, size.y), Vector2(x + 4.0, 0.0), Vector2(x + 8.0, size.y)])
+
+func _hill_origins() -> PackedFloat32Array:
+	# Background hills. Each one spans x-90 .. x+190, so 280px wide; they sit
+	# HILL_SPACING apart, which is wider than that, so the row is evenly spaced
+	# and no two can overlap however wide the world is. The starter's hand-placed
+	# 100 / 470 / 770 were irregular, and appending to them by hand produced an
+	# overlap in front of the finish.
+	var origins := PackedFloat32Array()
+	var x := 100.0
+	while x - 90.0 <= float(level.width):
+		origins.append(x)
+		x += HILL_SPACING
+	return origins
 
 func _add_area(rect: Rect2, layer: int, spikes: bool) -> Area2D:
 	var area := Area2D.new()
@@ -195,10 +209,7 @@ func _draw() -> void:
 		draw_line(Vector2(x, 80), Vector2(x, 320), Color("e7e5df"), 1)
 	for y in range(96, 321, 32):
 		draw_line(Vector2(0, y), Vector2(width, y), Color("e7e5df"), 1)
-	# Irregularly spaced by hand, not by formula: 100/470/770 are the starter's,
-	# 1060/1290 carry the same rhythm across Section 03 so the far half of the
-	# world is not a bare backdrop. The last one ends on the world's right edge.
-	for x in [100, 470, 770, 1060, 1290]:
+	for x in _hill_origins():
 		draw_colored_polygon(PackedVector2Array([Vector2(x-90,320),Vector2(x+50,180),Vector2(x+190,320)]), Color("e4e8e3"))
 	for entry in level.solids:
 		var r := Rect2(entry[0], entry[1], entry[2], entry[3])
