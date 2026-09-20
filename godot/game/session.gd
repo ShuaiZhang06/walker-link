@@ -3,7 +3,6 @@ extends Node2D
 const Player = preload("res://features/player/player.gd")
 const Hud = preload("res://ui/hud.gd")
 enum State { MENU, PLAYING, PAUSED, DYING, COMPLETE }
-const HILL_SPACING := 320.0
 var state: State = State.MENU
 var player: CharacterBody2D
 var camera: Camera2D
@@ -76,17 +75,12 @@ func _spike_points(size: Vector2, index: int) -> PackedVector2Array:
 	return PackedVector2Array([Vector2(x, size.y), Vector2(x + 4.0, 0.0), Vector2(x + 8.0, size.y)])
 
 func _hill_origins() -> PackedFloat32Array:
-	# Background hills. Each one spans x-90 .. x+190, so 280px wide; they sit
-	# HILL_SPACING apart, which is wider than that, so the row is evenly spaced
-	# and no two can overlap however wide the world is. The starter's hand-placed
-	# 100 / 470 / 770 were irregular, and appending to them by hand produced an
-	# overlap in front of the finish.
-	var origins := PackedFloat32Array()
-	var x := 100.0
-	while x - 90.0 <= float(level.width):
-		origins.append(x)
-		x += HILL_SPACING
-	return origins
+	# Background hills, each 280px wide (x-90 .. x+190), placed by hand rather
+	# than by a formula. 100/470/770 are the starter's own and stay exactly where
+	# the starter put them. 1290 stands a whole hill behind the finish: its right
+	# foot lands on the world's right edge, so the flag is not backed by a hill
+	# the screen cuts in half. No two bases overlap.
+	return PackedFloat32Array([100.0, 470.0, 770.0, 1290.0])
 
 func _add_area(rect: Rect2, layer: int, spikes: bool) -> Area2D:
 	var area := Area2D.new()

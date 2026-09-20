@@ -172,16 +172,21 @@ func run() -> void:
 	# Second hazard's base is the step's top (296), not the ground (320).
 	check("hazard-art-matches-trigger", art_ok and spike_bases == [320.0, 296.0], {"spike_base_y": spike_bases})
 	var hills: PackedFloat32Array = game._hill_origins()
+	var finish_xy: Array = game.level.finish
 	var hill_gaps: Array = []
 	var hills_ok: bool = hills.size() >= 2
-	for i in range(1, hills.size()):
-		var gap: float = hills[i] - hills[i - 1]
-		hill_gaps.append(gap)
-		# Even spacing, and wider than a hill's own 280px base, so none overlap.
-		hills_ok = hills_ok and is_equal_approx(gap, hills[1] - hills[0]) and gap >= 280.0
-	# The row still reaches the world's right edge: no bare strip before the flag.
-	hills_ok = hills_ok and hills[hills.size() - 1] + 190.0 >= float(game.level.width)
-	check("hill-row-even-and-clear", hills_ok, {"origins": Array(hills), "gaps": hill_gaps})
+	for i in range(hills.size()):
+		# A hill is 280px wide and has to stand whole inside the world, or the
+		# screen's right edge slices it in half.
+		hills_ok = hills_ok and hills[i] - 90.0 >= 0.0 and hills[i] + 190.0 <= float(game.level.width)
+		if i > 0:
+			var gap: float = hills[i] - hills[i - 1]
+			hill_gaps.append(gap)
+			hills_ok = hills_ok and gap >= 280.0
+	var last_hill: float = hills[hills.size() - 1]
+	# The flag stands on that last, whole hill.
+	hills_ok = hills_ok and last_hill - 90.0 <= float(finish_xy[0]) and last_hill + 190.0 >= float(finish_xy[0]) + float(finish_xy[2])
+	check("hill-row-clear-and-whole", hills_ok, {"origins": Array(hills), "gaps": hill_gaps, "last_hill_base": [last_hill - 90.0, last_hill + 190.0]})
 	await fresh()
 	game.player.position = Vector2(956, 320)
 	game.player.test_axis = 0.0
