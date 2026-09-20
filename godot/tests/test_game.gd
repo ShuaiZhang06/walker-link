@@ -172,20 +172,20 @@ func run() -> void:
 	# Second hazard's base is the step's top (296), not the ground (320).
 	check("hazard-art-matches-trigger", art_ok and spike_bases == [320.0, 296.0], {"spike_base_y": spike_bases})
 	await fresh()
-	game.player.position = Vector2(988, 320)
+	game.player.position = Vector2(956, 320)
 	game.player.test_axis = 0.0
 	await steps(30)
-	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "clearance_px":1028-(988+9)})
+	check("step-spike-safe-strip", game.state == Game.State.PLAYING and game.player.is_on_floor() and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "clearance_px":996-(956+9)})
 	# Walking into the step's side is a wall, not a death: the spikes are inset 4px
 	# from the block's edges, so a blocked body never touches a trigger.
 	game.player.test_axis = 1.0
 	await steps(40)
-	check("step-blocks-the-walk", game.state == Game.State.PLAYING and absf(game.player.position.x - 1015.0) < 1.0 and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "step_face_x":1024})
+	check("step-blocks-the-walk", game.state == Game.State.PLAYING and absf(game.player.position.x - 983.0) < 1.0 and absf(game.player.position.y - 320.0) < 0.2, {"position":str(game.player.position), "step_face_x":992})
 	# The step must be jumped over, never stood on: sweep the hop's take-off range
 	# and count how many trials come to rest on the step's surface (y = 296).
 	var hop := {"cleared":0, "died":0, "stood_on_step":0, "cleared_marks":[], "died_marks":[]}
-	for mark in [964.0, 972.0, 978.0, 984.0, 990.0, 998.0]:
-		var trial: Dictionary = await takeoff_trial(Vector2(920, 320), mark)
+	for mark in [932.0, 940.0, 946.0, 952.0, 958.0, 966.0]:
+		var trial: Dictionary = await takeoff_trial(Vector2(888, 320), mark)
 		if bool(trial["landed"]) and absf(float(trial["y"]) - 296.0) < 0.2:
 			hop["stood_on_step"] += 1
 		elif bool(trial["landed"]):
@@ -195,13 +195,13 @@ func run() -> void:
 			hop["died"] += 1
 			hop["died_marks"].append(mark)
 	check("step-is-jumped-not-stood-on", hop["stood_on_step"] == 0 and hop["cleared"] >= 3 and hop["died"] >= 1, hop)
-	var stone: Dictionary = await takeoff_trial(Vector2(1150, 320), 1200.0)
-	check("high-stone-reachable", bool(stone["landed"]) and absf(float(stone["y"]) - 280.0) < 0.2 and float(stone["x"]) > 1272.0 and float(stone["x"]) < 1312.0, stone)
+	var stone: Dictionary = await takeoff_trial(Vector2(1035, 320), 1080.0)
+	check("high-stone-reachable", bool(stone["landed"]) and absf(float(stone["y"]) - 280.0) < 0.2 and float(stone["x"]) > 1152.0 and float(stone["x"]) < 1192.0, stone)
 	# The stone is the only way across the 144px chasm, and only from the last
 	# stretch of ground: an early take-off falls instead of clearing it.
 	var reach := {"on_stone":0, "fell":0, "stone_marks":[], "fell_marks":[]}
-	for mark in [1150.0, 1162.0, 1174.0, 1186.0, 1198.0, 1210.0, 1222.0]:
-		var trial: Dictionary = await takeoff_trial(Vector2(1140, 320), mark)
+	for mark in [1044.0, 1053.0, 1062.0, 1071.0, 1080.0, 1089.0, 1098.0]:
+		var trial: Dictionary = await takeoff_trial(Vector2(1035, 320), mark)
 		if bool(trial["landed"]) and absf(float(trial["y"]) - 280.0) < 0.2:
 			reach["on_stone"] += 1
 			reach["stone_marks"].append(mark)
@@ -210,10 +210,10 @@ func run() -> void:
 			reach["fell_marks"].append(mark)
 	check("stone-takeoff-sweep", reach["on_stone"] > 0 and reach["fell"] > 0, reach)
 	await fresh()
-	game.player.position = Vector2(1450, 320)
+	game.player.position = Vector2(1380, 320)
 	await steps(3)
 	var plateau_camera: float = game.camera.position.x
-	game.player.position = Vector2(1450, 432)
+	game.player.position = Vector2(1380, 432)
 	await steps(1)
 	var died_on_plateau: bool = game.state == Game.State.DYING
 	await steps(38)

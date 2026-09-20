@@ -196,9 +196,9 @@ func _draw() -> void:
 	for y in range(96, 321, 32):
 		draw_line(Vector2(0, y), Vector2(width, y), Color("e7e5df"), 1)
 	# Irregularly spaced by hand, not by formula: 100/470/770 are the starter's,
-	# 1120/1420 carry the same rhythm across Section 03 so the far half of the
-	# world is not a bare backdrop.
-	for x in [100, 470, 770, 1120, 1420]:
+	# 1060/1290 carry the same rhythm across Section 03 so the far half of the
+	# world is not a bare backdrop. The last one ends on the world's right edge.
+	for x in [100, 470, 770, 1060, 1290]:
 		draw_colored_polygon(PackedVector2Array([Vector2(x-90,320),Vector2(x+50,180),Vector2(x+190,320)]), Color("e4e8e3"))
 	for entry in level.solids:
 		var r := Rect2(entry[0], entry[1], entry[2], entry[3])
