@@ -162,6 +162,15 @@ found and fixed both, and they are written up in `_qc/WALKTHROUGH-REVIEW.md`.
 *Shuai Zhang. I can explain every line of this change, including the parts I did
 not type.*
 
+**Two kinds of decision are listed below, and they are not the same.** The
+game-side ones I made as the work happened, one approval at a time — the record
+is [FRICTIONAL.md §4](FRICTIONAL.md) and the revision log in
+[CHANGE-BRIEF.md §6](CHANGE-BRIEF.md). The film-side ones, marked **(film)**,
+were taken by the AI during the build while following the
+`godot-waikthrough` skill's rules, reported to me, and **ratified by me on
+review** — I watched the export and accepted them. They are listed here because
+I stand behind them, not because I typed them first.
+
 **Decided.**
 - To fork the starter rather than begin again, and to keep `upstream` read-only.
 - The character concept — a Link-styled adventurer — and its readability rules:
@@ -173,7 +182,7 @@ not type.*
   the tuning.
 - Section 03's intent: a step to be jumped *over*, one stone, one chasm.
 - The working method: plan first, one step per approval, a commit per step.
-- For the film: the `walker` framing, what goes in the verdict, and the honesty
+- **(film)** The `walker` framing, what goes in the verdict, and the honesty
   boundary — label the scripted input on screen, never fake a completion,
   never change the game to hide a defect.
 - That the MP4 stays out of GitHub and is linked from the README by name and
@@ -202,8 +211,8 @@ not type.*
   finish.
 - The in-game title, `WALKER / JUMPMAN` → `WALKER / LINK`, and the menu copy to
   describe the real route.
-- In the film: cut B03 before an unrelated death card it never mentions, cut
-  B09 before the completion so it belongs to B13, and split a 36-second static
+- **(film)** Cut B03 before an unrelated death card it never mentions, cut B09
+  before the completion so it belongs to B13, and split a 36-second static
   verdict card in two.
 
 **Rejected.**
@@ -217,10 +226,11 @@ not type.*
 - Raising `jump_velocity` to make a jump reachable.
 - "Fixing" the route test by trimming its expectation — the completion
   assertion got *stricter* instead.
-- In the film: substituting another brand's audio for the missing outro jingle
-  (it ships silent and the blocker is reported); re-shooting the chasm take to
-  match the prediction I had written (the take that actually happened is the
-  one in the film); and lowering the strict frame gate to obtain a pass.
+- **(film)** Substituting another brand's audio for the missing outro jingle —
+  it ships silent and the blocker is reported instead; re-shooting the chasm
+  take to match the prediction in CHANGE-BRIEF, so the take that actually
+  happened is the take in the film; and lowering the strict frame gate to
+  obtain a pass.
 
 **Deferred, and it cost me.** Claude flagged the F8 overlap risk before
 implementation and I chose to defer it. It later forced the Section 03 rebuild.
