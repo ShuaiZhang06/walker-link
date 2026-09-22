@@ -22,3 +22,20 @@ credentials/
 *.pfx
 
 # Git cannot ignore by size: inspect staged files before committing (>25 MB).
+
+# ── Film reel (youtube/<slug>/) ───────────────────────────────────────────────
+# Media already falls under the *.mp4 / *.mp3 / exports/ rules above and is
+# handed off through the course media storage, linked from README.md.
+# These are the reel's regenerable build products — recipes and evidence are
+# committed, build scratch is not.
+youtube/**/clips/
+youtube/**/_build/
+youtube/**/_stale/
+youtube/**/build-state.json
+youtube/**/todo.json
+youtube/**/STATUS.md
+youtube/**/ToDo.md
+youtube/**/qc-sheet.png
+youtube/**/images/
+youtube/**/manim/
+youtube/**/pantry/

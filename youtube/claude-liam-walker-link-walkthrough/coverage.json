@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "game": {
+    "name": "walker-link",
+    "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311"
+  },
+  "captures": {
+    "run-01": {
+      "path": "capture/run-01.mp4",
+      "sha256": "c2a15a67cab6b1704b81bbd4ad003091f98379f89fee7b4c7cd74ee482a68d5f",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-01-inputs.jsonl",
+      "note": "Menu card, Enter, the whole course to the flag, the results card, then Enter to replay."
+    },
+    "run-02": {
+      "path": "capture/run-02.mp4",
+      "sha256": "f95f2ed6edc58b8461364b1480639db5675559cbd4a37d375af52e1d4f112966",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-02-inputs.jsonl",
+      "note": "Pointer start, a deliberate walk into the ground spikes, the automatic retry, then the same spikes cleared."
+    },
+    "run-03": {
+      "path": "capture/run-03.mp4",
+      "sha256": "1db95d3c737b05e23731b719ecef1ce3051007bb5eb5ad6cd3cbc46c10e32b7c",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-03-inputs.jsonl",
+      "note": "The route into Section 03, a take-off that lands on the stone and then runs off its end into the chasm."
+    },
+    "run-04": {
+      "path": "capture/run-04.mp4",
+      "sha256": "91a1fadf970a2f6e1074725a13fa8d99e7e0cc193901d2c42c1ea70547bc98e2",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-04-inputs.jsonl",
+      "note": "Escape pause, Enter resume, R restart, a real application switch that pauses the game, M back to the menu."
+    },
+    "run-05": {
+      "path": "capture/run-05.mp4",
+      "sha256": "52787334ccb6b4741adda558284a7ebdab60ba87fe4c3c2697cfa061b0676d09",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-05-inputs.jsonl",
+      "note": "Standing, running to the speed cap, stopping, turning to the left wall, both directions held at once, one jump."
+    },
+    "run-06": {
+      "path": "capture/run-06.mp4",
+      "sha256": "fa33bbd82daeb82506ab5f306e5cc815e19bc707003a15f2db085d4ddfd50c20",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-06-inputs.jsonl",
+      "note": "Walking into the spiked step, which blocks and does not kill; backing up; hopping it and landing beyond."
+    },
+    "run-07": {
+      "path": "capture/run-07.mp4",
+      "sha256": "53d5a335f3113f860017a95a35b82f6b2099ccbc1170e970225c522250773941",
+      "build_id": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311",
+      "method": "scripted-input",
+      "input_log": "capture/run-07-inputs.jsonl",
+      "note": "Walking off the end of the ground and jumping late (coyote), a refused mid-air press, a buffered press before landing."
+    }
+  },
+  "features": [
+    {
+      "id": "start-session",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-01",
+          "beat_id": "B02",
+          "start_s": 0.0,
+          "action_s": 1.633,
+          "end_s": 2.6,
+          "observation": "The menu card reads \"First steps. Real jumps.\" and \"ENTER / START\". Enter is pressed at frame 49 and the state goes MENU -> PLAYING on frame 50 with the player at (64, 320).",
+          "riff": "The card names the course before it asks for a keypress, which is the cheapest tutorial a platformer can buy. It also over-promises nothing: two gaps, a step, a stone, a flag."
+        },
+        {
+          "capture": "run-02",
+          "beat_id": "B10",
+          "start_s": 0.5,
+          "action_s": 1.2,
+          "end_s": 1.7,
+          "observation": "A left mouse click at logical (320, 232) — inside the START button rect (220, 215, 200, 34) — starts the session on frame 37. The engine movie writer does not draw the OS cursor, so the evidence on screen is the card responding, with the click position in the input log.",
+          "riff": "An undocumented second way in: the HUD advertises Enter only. Worth either documenting or removing, because a control nobody is told about is a control nobody tests."
+        }
+      ]
+    },
+    {
+      "id": "run-and-turn",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-05",
+          "beat_id": "B03",
+          "start_s": 0.6,
+          "action_s": 1.0,
+          "end_s": 4.4,
+          "observation": "Holding D reaches exactly 160.0 px/s within 10 frames; releasing stops the body inside 3 frames at x=113.96; holding A flips facing to -1 and walks to the clamp at x=10.0; holding A and D together settles velocity_x at 0.0.",
+          "riff": "Acceleration 1280 and deceleration 1920 mean the stop is faster than the start, so the character parks where you let go. That is the difference between reading a landing and sliding off it."
+        }
+      ]
+    },
+    {
+      "id": "character-art",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-05",
+          "beat_id": "B03",
+          "start_s": 0.3,
+          "action_s": 2.033,
+          "end_s": 6.1,
+          "observation": "The player is drawn as a pointed green cap, a flared tunic, a pointed ear and fringe, a shield on the leading arm and a sword on the trailing arm. On the turn at frame 61 the cap tail, ear, eye, sword and shield all swap sides; in the air the legs tuck and the cap tail lifts.",
+          "riff": "Source: player.gd::_draw() is the only file this change touched — draw_rect and draw_colored_polygon, no sprite. The measured overhang past the 18x28 collider is 4.5 px at the sword tip. Whether a player reads that as a prop and not as a hitbox is the one thing this capture cannot settle."
+        }
+      ]
+    },
+    {
+      "id": "jump",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-05",
+          "beat_id": "B03",
+          "start_s": 4.8,
+          "action_s": 4.967,
+          "end_s": 6.1,
+          "observation": "One press of Space at frame 149 produces exactly one jump. Peak rise measured over the next 34 frames: 56.0 px from a floor at y=320.",
+          "riff": "The continuous formula predicts 53.3 px; the engine at 60 Hz gives 56. A five percent gap between the arithmetic and the tick, and the tick wins — which is the whole argument for measuring geometry instead of deriving it."
+        }
+      ]
+    },
+    {
+      "id": "no-double-jump",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-07",
+          "beat_id": "B05",
+          "start_s": 2.9,
+          "action_s": 3.033,
+          "end_s": 3.8,
+          "observation": "A second Space press at frame 91, while airborne at y=266.33, leaves jumps unchanged at 3. opportunity_consumed is still set from the first jump.",
+          "riff": "No double jump is a design decision the code enforces with one boolean, not with a timer — so it cannot drift. The cost is that a misread edge is unrecoverable, which is exactly what makes coyote time worth having."
+        }
+      ]
+    },
+    {
+      "id": "coyote-window",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-07",
+          "beat_id": "B04",
+          "start_s": 2.6,
+          "action_s": 2.9,
+          "end_s": 3.9,
+          "observation": "The ground ends at x=448. The body leaves the floor at frame 86 (physics tick 164, x=459.55). Space goes down at frame 87 — two ticks later, already airborne — and the jump fires: jumps 2 -> 3. It clears the 64 px gap and lands on the platform at x=566.92.",
+          "riff": "Six ticks is a tenth of a second, so no still frame can prove this; the tick numbers in run-07-inputs.jsonl are the evidence. Without the window this exact input is a death, which is a good measure of how much forgiveness is actually doing."
+        }
+      ]
+    },
+    {
+      "id": "jump-buffer",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-07",
+          "beat_id": "B05",
+          "start_s": 4.4,
+          "action_s": 4.833,
+          "end_s": 5.7,
+          "observation": "Space goes down at frame 145 while still falling (tick 282, y=305.53, not on the floor). The jump fires 6 physics ticks later, on the touchdown tick — the outer edge of the six-tick buffer.",
+          "riff": "Buffer and coyote are the same idea pointed in opposite directions: one forgives a press that is late, one forgives a press that is early. Together they are twelve ticks of slack around a landing, and they are why this jump feels less brittle than its numbers suggest."
+        }
+      ]
+    },
+    {
+      "id": "starter-course",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-01",
+          "beat_id": "B02",
+          "start_s": 1.7,
+          "action_s": 4.133,
+          "end_s": 6.6,
+          "observation": "Sections 01 and 02, unchanged from the starter: a ledge at (160, 304), the three-spike ground hazard at (320, 304), a 64 px gap at 448-512, a ledge at (576, 288) and a 48 px gap at 736-784. Take-offs logged at x=140.62, 294.21, 424.88, 550.22 and 712.88.",
+          "riff": "This stretch is the control: it is byte-identical geometry from the starter, so anything that looks different later is the fork, not the engine."
+        }
+      ]
+    },
+    {
+      "id": "spiked-step",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-06",
+          "beat_id": "B06",
+          "start_s": 5.0,
+          "action_s": 6.267,
+          "end_s": 8.1,
+          "observation": "Walking right without jumping, the body stops dead at x=983.0, y=320.0 against the step face at x=992, and stays PLAYING. The spikes start at x=996 — four pixels inside the block — so a blocked body never reaches a trigger.",
+          "riff": "The four-pixel inset is the difference between an obstacle and a trap. Bumping into scenery should cost you a second, not a life."
+        },
+        {
+          "capture": "run-06",
+          "beat_id": "B08",
+          "start_s": 8.9,
+          "action_s": 9.4,
+          "end_s": 10.3,
+          "observation": "After backing up, take-off is logged at x=948.26 (physics tick 557) and the body lands at x=1062.93, y=319.93 — the ground beyond the step, not the step top at y=296.",
+          "riff": "The step is 40 px of obstacle over a jump that rises 56, and the measured take-off window is 940.6 to 964.6 — about nine ticks. Six sweep take-offs across that range land on the step zero times, so it is never footing, only something to clear."
+        }
+      ]
+    },
+    {
+      "id": "high-stone-and-chasm",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-01",
+          "beat_id": "B09",
+          "start_s": 7.5,
+          "action_s": 8.333,
+          "end_s": 9.7,
+          "observation": "Take-off for the stone logged at x=1080.86 (tick 403); the body lands on the 40 px stone at (1152, 280). A second take-off at x=1174.19 (tick 438) crosses to the far platform at (1256, 320). The chasm between them is 144 px wide.",
+          "riff": "A 112 px measured maximum leap against a 144 px chasm is the whole design of the section: the stone is not decoration, it is the only route. That is a constraint the geometry enforces, not one the level text asks you to respect."
+        }
+      ]
+    },
+    {
+      "id": "camera-and-hud",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-01",
+          "beat_id": "B09",
+          "start_s": 6.6,
+          "action_s": 8.333,
+          "end_s": 10.3,
+          "observation": "The camera holds a 100 px forward lead and clamps at level.width - 320 = 1160 as the player reaches the plateau. The HUD progress bar fills toward the relocated finish at x=1420, and the timer and RETRIES counter run in the bottom band.",
+          "riff": "The progress denominator had to move with the finish or the bar would have pinned to 100 percent halfway through the level. It is a small bug that a wider world creates for free, and a good example of why extending a level is never only level data."
+        }
+      ]
+    },
+    {
+      "id": "hazard-death-and-retry",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-02",
+          "beat_id": "B10",
+          "start_s": 2.5,
+          "action_s": 3.133,
+          "end_s": 4.2,
+          "observation": "The body reaches x=318.21 and the spike trigger fires: state DYING, deaths 1, death_reason \"Watch the spikes\". 17 frames (0.57 s) later the state is PLAYING again with the player at (64.36, 319.93). The same spikes are then cleared with a jump at x=294.21.",
+          "riff": "Naming the cause on the death card and putting you back inside six tenths of a second is the entire retry design. No lives counter, no menu, no lecture — the failure is a sentence and a restart."
+        }
+      ]
+    },
+    {
+      "id": "fall-death",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-03",
+          "beat_id": "B11",
+          "start_s": 6.8,
+          "action_s": 8.167,
+          "end_s": 9.2,
+          "observation": "After landing on the stone at x=1158 the body runs off its right end at x=1206, scrapes down the far platform face (x pinned at 1246.93 against a face at 1256) and crosses the fall boundary: y=435.93 against fall_y=430. death_reason \"Missed the landing\", deaths 1, respawn at (64, 320) with the camera re-clamped from 1160 to 320.",
+          "riff": "Forty pixels of stone is a step, not a place to stand — and this run proves it by walking off the end. The cliff scrape is the honest part: the game does not kill you at the edge, it lets you slide down the wall and only then reads the fall line."
+        }
+      ]
+    },
+    {
+      "id": "pause-resume",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-04",
+          "beat_id": "B12",
+          "start_s": 3.4,
+          "action_s": 3.7,
+          "end_s": 6.1,
+          "observation": "Escape at frame 111 puts the state in PAUSED with the body at (555.55, 319.93). Over the next 60 frames both the position and game.elapsed stay frozen at 3.0 s. Enter at frame 175 resumes with require_jump_release set, so a held Space does not fire on the way back in.",
+          "riff": "Freezing the clock as well as the body is the detail that matters: a pause that keeps timing is a pause that punishes you for using it."
+        }
+      ]
+    },
+    {
+      "id": "manual-restart",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-04",
+          "beat_id": "B12",
+          "start_s": 7.0,
+          "action_s": 7.3,
+          "end_s": 8.0,
+          "observation": "R at frame 219 puts the player back at (64, 320) with deaths unchanged at 0 and the camera back to 320.",
+          "riff": "A restart that does not count as a death separates \"I gave up on this attempt\" from \"the game killed me\", which keeps the retry counter meaningful as a difficulty signal."
+        }
+      ]
+    },
+    {
+      "id": "focus-loss-autopause",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-04",
+          "beat_id": "B12",
+          "start_s": 8.7,
+          "action_s": 9.0,
+          "end_s": 9.8,
+          "observation": "At frame 270 the driver launches another macOS application, which takes the keyboard focus. The engine emits focus_exited on the game window and session.gd pauses the run on frame 271. This is a real application switch, not an injected signal.",
+          "riff": "Auto-pause on focus loss costs four lines and removes a whole class of unfair deaths. It is also the one feature that is genuinely awkward to film, because the cause happens outside the frame."
+        }
+      ]
+    },
+    {
+      "id": "main-menu",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-04",
+          "beat_id": "B12",
+          "start_s": 10.2,
+          "action_s": 10.533,
+          "end_s": 11.4,
+          "observation": "M at frame 316, from the paused state, returns the session to MENU on frame 317 and the start card comes back.",
+          "riff": "M is only accepted from PAUSED or COMPLETE, so it cannot be fat-fingered mid-run. A small guard, but it is the kind that keeps a keyboard-only game from feeling hostile."
+        }
+      ]
+    },
+    {
+      "id": "finish-and-replay",
+      "status": "implemented",
+      "evidence": [
+        {
+          "capture": "run-01",
+          "beat_id": "B13",
+          "start_s": 10.0,
+          "action_s": 10.467,
+          "end_s": 14.3,
+          "observation": "The body reaches (1416.85, 319.93) and its 18x28 rect intersects the finish rect (1420, 264, 24, 56): state COMPLETE at frame 314 with 0 deaths and 8 jumps, reported as 8.8 seconds on the results card. Enter at frame 419 replays from (64, 320) with jumps and deaths reset to 0.",
+          "riff": "The completion check asserts the body actually overlaps the finish rect read from the level JSON, not merely that a flag was drawn somewhere — which is why moving the finish from 916 to 1420 could not quietly pass."
+        }
+      ]
+    },
+    {
+      "id": "cherries",
+      "status": "planned",
+      "reason": "GDD 0.2.0 proposes twenty optional cherries; none is implemented in this slice.",
+      "evidence": []
+    },
+    {
+      "id": "three-zone-course",
+      "status": "planned",
+      "reason": "LEVEL-DESIGN.md proposes a three-zone course. The build is one level of three sections, and Section 03 is the fork's addition, not the proposed zone three.",
+      "evidence": []
+    },
+    {
+      "id": "audio",
+      "status": "planned",
+      "reason": "The game ships no sound at all — no music, no effects. Nothing was muted for this film and no sound was added to it.",
+      "evidence": []
+    },
+    {
+      "id": "settings-and-remapping",
+      "status": "planned",
+      "reason": "GDD proposes a settings screen with persistence and key remapping. session.gd::_setup_input() hard-codes one InputMap and there is no settings scene.",
+      "evidence": []
+    },
+    {
+      "id": "moving-platforms",
+      "status": "planned",
+      "reason": "Documented in GAME-BRIEF.md as a follow-up the MVP route must not depend on. Not implemented.",
+      "evidence": []
+    },
+    {
+      "id": "web-export",
+      "status": "planned",
+      "reason": "A locally served Web export is the proposed shareable target. Export templates are absent; no export exists. This is a source release.",
+      "evidence": []
+    }
+  ]
+}

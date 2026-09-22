@@ -1,0 +1,978 @@
+{
+  "metadata": {
+    "title": "Walker, Forked.",
+    "slug": "claude-liam-walker-link-walkthrough",
+    "topic": "WALKER-LINK · GODOT 4.7 WALKTHROUGH",
+    "register": "Teardown",
+    "audience": "Claude",
+    "brand": "claude-liam",
+    "persona": "Liam (in for Bear)",
+    "voice": "am_onyx",
+    "engine": "kokoro",
+    "voice_kokoro": "am_onyx",
+    "palette": "claude",
+    "style_preset": "claude",
+    "ground": "#FAF9F5",
+    "greeting": "Sawubona, Liam",
+    "folderLabel": "@NikBearBrown",
+    "in_for_bear": true,
+    "aspect_ratio": "16:9",
+    "fps": 30,
+    "skill": "godot-waikthrough (walker modifier)",
+    "game": {
+      "name": "walker-link",
+      "revision": "19a7dddb9ab30fa7f386878b05ef63a018928069",
+      "short_revision": "19a7ddd",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "source_snapshot_sha256": "5e7724383ac2b2d076f47e34851dbf80bbb940b0e0f62071efd707f4bfc8a311"
+    },
+    "build": {
+      "at": "2026-09-20T18:06:07",
+      "cut": "master",
+      "filled": 18,
+      "of": 18,
+      "slates": [],
+      "skin_warnings": []
+    }
+  },
+  "beats": [
+    {
+      "beat_id": "B00",
+      "act": "cold open — the Walker ask",
+      "role_note": "COLD OPEN LAW / walker modifier B00. The prompt is an illustrative reconstruction, said out loud in the narration; not a transcript.",
+      "narration_text": "Sawubona — this is Liam, in for Bear. That prompt is an illustrative reconstruction. It shows you the shape of the ask; it is not a transcript of anything anyone typed. What is real is the thing underneath it: a starter platformer, a fork of it, and a build I am about to play in front of you.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 22,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "bookend",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "greeting": "Sawubona, Liam",
+            "topic": "WALKER-LINK · GODOT 4.7 WALKTHROUGH",
+            "segment": "Walker, Forked.",
+            "command": "Please use Walker to convert my game design document about a small Godot platformer — a green-capped adventurer crossing a short course of ledges, gaps and spikes, one fixed-height jump, unlimited retries — into a playable Godot project I can run, read and extend.",
+            "runningText": "reconstructed prompt — illustrative, not a transcript…",
+            "output": [
+              "Starter: nikbearbrown/walker-jumpman — “First Steps”, Godot 4.7.2.",
+              "Fork: ShuaiZhang06/walker-link @ 19a7ddd — new character, new Section 03.",
+              "Played below input-only; tuning.gd and the player collider untouched."
+            ],
+            "folderLabel": "@NikBearBrown",
+            "modelLabel": "Opus 5",
+            "effortLabel": "High",
+            "durationSeconds": 15.53
+          },
+          "rendered": {
+            "out": "media/B00.mp4",
+            "at": "2026-09-20T21:03:10.237331+00:00"
+          }
+        }
+      },
+      "actual_duration_s": 15.53,
+      "audio_file": "mp3/beat-B00.mp3",
+      "render_duration_s": 15.533333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B00.mp4",
+        "filled_by": "remotion:ClaudeComposerAsk",
+        "at": "2026-09-20T18:06:07"
+      }
+    },
+    {
+      "beat_id": "B01",
+      "act": "BLUF — what was actually built",
+      "role_note": "EXECUTIVE-SUMMARY LAW / walker modifier B01. Plain-language summary of the real result and its limits, with one meaningful correction.",
+      "narration_text": "Here is the honest framing. walker-link is not a game written from nothing. It is a fork of nikbearbrown slash walker-jumpman — the First Steps prototype, Godot four point seven point two. Two things in it belong to the fork. The player is redrawn as a green-capped adventurer carrying a sword and a shield. And the course grows a third section. The movement tuning, the collider, the controls, the retry loop and the original geometry all still belong to the starter.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 32,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "bookend",
+        "remotion": {
+          "pattern": "BrutalistHesitantWriter",
+          "props": {
+            "text": "walker-link is a game I wrote.\nTwo things in it are mine:\nthe character,\nand one new level section.\nThe rest is the starter's.",
+            "triggerWords": "wrote",
+            "replacementWords": "forked",
+            "seed": "walker-link-bluf-2026-09-20-v2",
+            "face": "serif",
+            "fontSize": 118,
+            "lineSpacing": 1.45,
+            "align": "center",
+            "charMs": 18,
+            "jitter": 6,
+            "mistakeRate": 3,
+            "hesitateWithin": 1,
+            "hesitateBetween": 4,
+            "banner": "",
+            "durationSeconds": 23.19
+          },
+          "rendered": {
+            "out": "media/B01.mp4",
+            "at": "2026-09-20T21:26:37.204072+00:00"
+          }
+        }
+      },
+      "actual_duration_s": 23.19,
+      "audio_file": "mp3/beat-B01.mp3",
+      "render_duration_s": 23.2,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B01.mp4",
+        "filled_by": "remotion:BrutalistHesitantWriter",
+        "at": "2026-09-20T18:06:07"
+      }
+    },
+    {
+      "beat_id": "B02",
+      "act": "the starter course",
+      "narration_text": "Real engine, native four K. Every key here is pressed by a script — no teleports, no position edits. This first stretch is the starter's own course.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 9,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-01",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 0,
+              "to": 200,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 116,
+              "to": 134,
+              "speed": 0.25,
+              "label": "REPLAY 0.25× — the first gap"
+            }
+          ],
+          "note": "Menu card, Enter, then sections 01 and 02: two ledges, two gaps, the ground spike cluster at x=320.",
+          "target_frames": 268,
+          "built_action_frames": 272,
+          "held_final_frames": 0
+        }
+      },
+      "actual_duration_s": 8.933333333333334,
+      "audio_file": "mp3/beat-B02.mp3",
+      "render_duration_s": 8.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B02.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B03",
+      "act": "the character",
+      "narration_text": "Change one: the character. Green cap, flared tunic, a shield on the leading arm, a sword behind. Turn around and every piece of it mirrors — slowed down here so you can see it. The sword tip reaches four and a half pixels past the collider. It is drawn, never solid.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 18,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-05",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 0,
+              "to": 100,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 56,
+              "to": 96,
+              "speed": 0.25,
+              "label": "REPLAY 0.25× — the turn, mirrored"
+            },
+            {
+              "from": 100,
+              "to": 186,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Standing, running to the 160 px/s cap, stopping, turning left to the wall clamp, A+D cancelling, then one jump (airborne pose).",
+          "target_frames": 414,
+          "built_action_frames": 346,
+          "held_final_frames": 68
+        }
+      },
+      "actual_duration_s": 13.8,
+      "audio_file": "mp3/beat-B03.mp3",
+      "render_duration_s": 13.8,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B03.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B04",
+      "act": "coyote time",
+      "narration_text": "The ground runs out at four forty-eight. The jump goes in two physics ticks after the floor is gone — and coyote time still pays it. Six ticks of forgiveness, one tenth of a second. That is the input log talking, not my eyes.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 14,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-07",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 20,
+              "to": 112,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 78,
+              "to": 102,
+              "speed": 0.15,
+              "label": "REPLAY 0.15× — jump pressed after the edge"
+            },
+            {
+              "from": 102,
+              "to": 155,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Walks off the end of the ground at x=448 without jumping; presses jump 2 ticks later; the coyote window pays it and the 64 px gap is cleared.",
+          "target_frames": 378,
+          "built_action_frames": 305,
+          "held_final_frames": 73
+        }
+      },
+      "actual_duration_s": 12.6,
+      "audio_file": "mp3/beat-B04.mp3",
+      "render_duration_s": 12.6,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B04.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B05",
+      "act": "no double jump, and the buffer",
+      "narration_text": "Press again in the air and nothing happens. There is one jump, and it is spent. But press it just before you land, and the buffer holds it for six ticks and fires it on the touchdown tick.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 13,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-07",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 86,
+              "to": 180,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 88,
+              "to": 100,
+              "speed": 0.2,
+              "label": "REPLAY 0.2× — the refused second press"
+            },
+            {
+              "from": 138,
+              "to": 156,
+              "speed": 0.2,
+              "label": "REPLAY 0.2× — buffered, then landing"
+            },
+            {
+              "from": 180,
+              "to": 197,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "A second press mid-air is refused; a later press 6 ticks before touchdown fires on landing.",
+          "target_frames": 297,
+          "built_action_frames": 261,
+          "held_final_frames": 36
+        }
+      },
+      "actual_duration_s": 9.9,
+      "audio_file": "mp3/beat-B05.mp3",
+      "render_duration_s": 9.9,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B05.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B06",
+      "act": "Section 03 — the step is a wall",
+      "narration_text": "Change two: Section 03. First thing in it is a spiked step. Walk into it and the run does not end — the body stops dead at nine eighty-three, against a face at nine ninety-two, and nothing kills you.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 13,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-06",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 120,
+              "to": 240,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 178,
+              "to": 200,
+              "speed": 0.2,
+              "label": "REPLAY 0.2× — blocked, not killed"
+            },
+            {
+              "from": 200,
+              "to": 245,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Walking right without jumping: the step face blocks the body at x=983 and the run continues.",
+          "target_frames": 338,
+          "built_action_frames": 275,
+          "held_final_frames": 63
+        }
+      },
+      "actual_duration_s": 11.266666666666667,
+      "audio_file": "mp3/beat-B06.mp3",
+      "render_duration_s": 11.266666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B06.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B07",
+      "act": "cause and effect — one source change",
+      "role_note": "The required source-change → on-screen-behaviour link, in the Claude skin.",
+      "narration_text": "That is a source change you can watch. In the starter, the spikes were painted at a hard-coded y of three hundred and twenty, while the trigger polygon was built from the hazard rect's own size. On flat ground nobody notices. Put spikes on a step twenty-four pixels up and the picture and the kill zone stop agreeing. Both now come out of one function, spike points, so the triangle you see is the triangle that kills. And the block is inset four pixels under the spikes on each side — which is exactly why walking into it stopped the run instead of ending it.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 38,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "card",
+        "remotion": {
+          "pattern": "ClaudeCodeBeat",
+          "props": {
+            "title": "godot/game/session.gd",
+            "language": "gdscript",
+            "code": "# Before: the picture and the kill zone were computed separately.\n#   _draw()     -> spikes painted at a literal y = 320, spaced i * 8\n#   _add_area() -> trigger polygons built from rect.size.x / 3.0\n# Agreed on flat ground. Disagreed on a step 24 px above it.\n\nfunc _spike_points(size: Vector2, index: int) -> PackedVector2Array:\n\tvar x := float(index) * size.x / 3.0\n\treturn PackedVector2Array([Vector2(x, size.y),\n\t\tVector2(x + 4.0, 0.0), Vector2(x + 8.0, size.y)])\n\nfunc _draw() -> void:                      # what you see\n\tdraw_colored_polygon(_spike_points(hazard.size, i), Color(\"d24e42\"))\n\nfunc _add_area(rect: Rect2, ...) -> Area2D:  # what kills you\n\ttriangle.polygon = _spike_points(rect.size, i)\n\n# hazard [996, 280, 24, 16] stands on block [992, 296, 32, 24]:\n# inset 4 px a side, so a body stopped by the face never reaches it.",
+            "sparkLine": "The drawing is the hitbox.",
+            "durationSeconds": 30.37
+          },
+          "rendered": {
+            "out": "media/B07.mp4",
+            "at": "2026-09-20T21:22:53.895028+00:00"
+          }
+        }
+      },
+      "actual_duration_s": 30.37,
+      "audio_file": "mp3/beat-B07.mp3",
+      "render_duration_s": 30.4,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B07.mp4",
+        "filled_by": "remotion:ClaudeCodeBeat",
+        "at": "2026-09-20T18:06:07"
+      }
+    },
+    {
+      "beat_id": "B08",
+      "act": "Section 03 — hopping the step",
+      "narration_text": "So you back up and hop it. Take off inside a twenty-four pixel window — measured, nine forty point six to nine sixty-four point six — and you land on the ground beyond. Never on the step: six take-offs across the range land on it zero times.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 15,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-06",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 214,
+              "to": 310,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 272,
+              "to": 302,
+              "speed": 0.15,
+              "label": "REPLAY 0.15× — the hop"
+            },
+            {
+              "from": 302,
+              "to": 338,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Backs up, runs at the step, takes off at x=948.26 and lands at x=1062.93 on the ground at y=320 — not on the step top at y=296.",
+          "target_frames": 416,
+          "built_action_frames": 332,
+          "held_final_frames": 84
+        }
+      },
+      "actual_duration_s": 13.866666666666667,
+      "audio_file": "mp3/beat-B08.mp3",
+      "render_duration_s": 13.866666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B08.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B09",
+      "act": "Section 03 — the stone, the chasm, the flag",
+      "narration_text": "Then the part the section is really about. A forty pixel stone, and behind it a hundred and forty-four pixel chasm against a measured hundred and twelve pixel leap. You cannot jump the gap. You have to use the stone. Step up, step across, and the flag is on the far plateau.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 16,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-01",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 196,
+              "to": 290,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 242,
+              "to": 280,
+              "speed": 0.15,
+              "label": "REPLAY 0.15× — stone, then the crossing"
+            },
+            {
+              "from": 280,
+              "to": 312,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Step hop at x=950, take-off for the stone at x=1080.86, stone to the far platform at x=1174.19, then the finish rect at [1420, 264, 24, 56].",
+          "target_frames": 443,
+          "built_action_frames": 379,
+          "held_final_frames": 64
+        }
+      },
+      "actual_duration_s": 14.766666666666667,
+      "audio_file": "mp3/beat-B09.mp3",
+      "render_duration_s": 14.766666666666667,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B09.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B10",
+      "act": "failure and recovery — the spikes",
+      "narration_text": "Failure. This run starts from a click on the START button instead of Enter — the engine's recorder does not draw the cursor, so watch the card, not the pointer. Then I walk into the starter's spikes on purpose. Watch the spikes. Retries goes to one, and nought point five seven seconds later I am back at the start and clearing them.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 20,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-02",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 0,
+              "to": 120,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 84,
+              "to": 118,
+              "speed": 0.15,
+              "label": "REPLAY 0.15× — contact, card, respawn"
+            },
+            {
+              "from": 118,
+              "to": 222,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Pointer start, spike contact at x=318.21, death card, auto-respawn at (64, 320) after 17 frames, then the same spikes cleared.",
+          "target_frames": 496,
+          "built_action_frames": 451,
+          "held_final_frames": 45
+        }
+      },
+      "actual_duration_s": 16.533333333333335,
+      "audio_file": "mp3/beat-B10.mp3",
+      "render_duration_s": 16.533333333333335,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B10.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B11",
+      "act": "failure and recovery — the chasm",
+      "narration_text": "The other way to lose. This take lands on the stone and then simply runs off the end of it — forty pixels is a step, not a place to stand. It clips the cliff face at twelve fifty-six, slides down, crosses the fall line at four hundred and thirty, and the game says: missed the landing. Same retry, same spawn, camera back to three twenty.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 21,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-03",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 150,
+              "to": 275,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 214,
+              "to": 252,
+              "speed": 0.12,
+              "label": "REPLAY 0.12× — off the stone, down the cliff"
+            },
+            {
+              "from": 252,
+              "to": 302,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Take-off at x=1067.52, lands on the stone at x=1158, runs off its right end at x=1206, scrapes the far platform face, dies at y=435.93.",
+          "target_frames": 523,
+          "built_action_frames": 492,
+          "held_final_frames": 31
+        }
+      },
+      "actual_duration_s": 17.433333333333334,
+      "audio_file": "mp3/beat-B11.mp3",
+      "render_duration_s": 17.433333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B11.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run."
+      }
+    },
+    {
+      "beat_id": "B12",
+      "act": "pause, restart, menu, focus",
+      "narration_text": "Everything around the run still works. Escape freezes the position and the clock — watch the timer stop. Enter resumes. R restarts the attempt and the retry counter does not move, because a restart is not a death. And when another application takes the keyboard — that is a real app switch, not a faked signal — the game pauses itself. M goes back to the menu.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 22,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-04",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 0,
+              "to": 300,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 262,
+              "to": 284,
+              "speed": 0.2,
+              "label": "REPLAY 0.2× — another app takes the keyboard"
+            },
+            {
+              "from": 284,
+              "to": 367,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Esc pause at x=555.55 with elapsed frozen at 3.0 s, Enter resume, R restart with deaths unchanged at 0, OS focus change → PAUSED, M → MENU.",
+          "target_frames": 549,
+          "built_action_frames": 493,
+          "held_final_frames": 56
+        }
+      },
+      "actual_duration_s": 18.3,
+      "audio_file": "mp3/beat-B12.mp3",
+      "render_duration_s": 18.3,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B12.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run.",
+        "contrast_regions": [
+          {
+            "label": "state card (menu / pause / results)",
+            "box": [
+              0.2547,
+              0.2861,
+              0.7516,
+              0.7278
+            ]
+          },
+          {
+            "label": "HUD title and controls",
+            "box": [
+              0.034,
+              0.03,
+              0.672,
+              0.165
+            ]
+          },
+          {
+            "label": "status line (retries and clock)",
+            "box": [
+              0.034,
+              0.95,
+              0.966,
+              1.0
+            ]
+          }
+        ],
+        "contrast_reason": "session.gd paints a translucent scrim, Color(0.10,0.16,0.20,0.16), over the whole play area behind the menu / pause / results card, so a whole-frame ink-vs-background average reads as low contrast even though the text itself is dark ink on #FFFDF7 and #F6F3EC. The regions below are this beat's essential text, measured locally; each one must pass. Empty-frame, fill and safe-area checks all still run. Both sampled frames of B12 sit on a card (the focus-loss pause, then the main menu), so the card region is measured too."
+      }
+    },
+    {
+      "beat_id": "B13",
+      "act": "the flag, the card, and again",
+      "narration_text": "And the end of it. The body overlaps the finish rect, the card reports the time and the retries, and Enter plays the whole thing again from a clean spawn. Eight point eight two seconds, zero retries, eight jumps.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 14,
+      "shot": {
+        "type": "VIDEO",
+        "lane": "gameplay",
+        "source": "own",
+        "treatment": "none",
+        "capture_plan": {
+          "capture": "run-01",
+          "chip": "SCRIPTED INPUT · NATIVE 4K ENGINE CAPTURE",
+          "segments": [
+            {
+              "from": 296,
+              "to": 340,
+              "speed": 1.0,
+              "label": ""
+            },
+            {
+              "from": 304,
+              "to": 328,
+              "speed": 0.2,
+              "label": "REPLAY 0.2× — the body meets the finish rect"
+            },
+            {
+              "from": 328,
+              "to": 470,
+              "speed": 1.0,
+              "label": ""
+            }
+          ],
+          "note": "Completion at (1416.85, 319.93) inside [1420, 264, 24, 56], results card, Enter → replay at (64, 320) with jumps and deaths reset.",
+          "target_frames": 349,
+          "built_action_frames": 306,
+          "held_final_frames": 43
+        }
+      },
+      "actual_duration_s": 11.633333333333333,
+      "audio_file": "mp3/beat-B13.mp3",
+      "render_duration_s": 11.633333333333333,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/B13.mp4",
+        "filled_by": "media",
+        "at": "2026-09-20T18:06:07"
+      },
+      "qc": {
+        "full_bleed": true,
+        "full_bleed_reason": "Engine capture. The game renders edge to edge at 3840x2160 — its HUD bar sits at the very top of the frame and its status line at the very bottom by design — so ink in the title-safe margin is the game, not overflow. Only the edge-bleed check is waived; underfill, clustering, empty-frame and contrast all still run.",
+        "contrast_regions": [
+          {
+            "label": "HUD title and controls",
+            "box": [
+              0.034,
+              0.03,
+              0.672,
+              0.165
+            ]
+          },
+          {
+            "label": "status line (retries and clock)",
+            "box": [
+              0.034,
+              0.95,
+              0.966,
+              1.0
+            ]
+          }
+        ],
+        "contrast_reason": "session.gd paints a translucent scrim, Color(0.10,0.16,0.20,0.16), over the whole play area behind the menu / pause / results card, so a whole-frame ink-vs-background average reads as low contrast even though the text itself is dark ink on #FFFDF7 and #F6F3EC. The regions below are this beat's essential text, measured locally; each one must pass. Empty-frame, fill and safe-area checks all still run. B13 straddles the results card and the live replay that follows it, so the regions declared here are the two that are on screen throughout the beat: the HUD title/controls block and the status line. The results card itself is measured in B12, which is on a card in both of its samples."
+      }
+    },
+    {
+      "beat_id": "BVD1",
+      "act": "verdict — what is settled",
+      "narration_text": "Verdict. Settled by machine: thirty-four mechanics checks and nine keyboard checks, zero failures, on Godot four point seven point two. Settled by playing: every implemented feature in this build, input-only, at revision one nine a seven d d d. The numbers are measured, not estimated — a fifty-six pixel jump, a nought point five seven second retry, a twenty-four pixel window over the step. And the starter's half is regression-tested unchanged: the tuning, the collider, the original geometry, all exactly as they were.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 30,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "card",
+        "remotion": {
+          "pattern": "ClaudeVerdictArtifact",
+          "props": {
+            "artifactTitle": "Walker, Forked.",
+            "artifactHeading": "What is settled",
+            "artifactLines": [
+              "Machine-checked at this revision: 34 mechanics checks + 9 keyboard checks, 0 failures, Godot 4.7.2.",
+              "Shown here input-only at walker-link 19a7ddd (source snapshot 5e772438…): every implemented feature, no teleports, no state writes.",
+              "Measured, not guessed: 56 px jump rise, 0.57 s auto-retry, 940.6–964.6 take-off window over the step, 144 px chasm against a 112 px leap.",
+              "The starter's half is regression-tested unchanged: tuning.gd, the 18×28 collider, the five original solids, the ground hazard and the spawn keep their exact values.",
+              "Both new landings and both failure modes were played on camera — the step hop, the stone, the spikes, the chasm — and the flag, with 0 retries."
+            ],
+            "durationSeconds": 30.5
+          },
+          "rendered": {
+            "out": "media/BVD1.mp4",
+            "at": "2026-09-20T21:58:07.544849+00:00"
+          }
+        }
+      },
+      "lead_silence_s": 0.4,
+      "actual_duration_s": 30.5,
+      "audio_file": "mp3/beat-BVD1.mp3",
+      "render_duration_s": 30.5,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/BVD1.mp4",
+        "filled_by": "remotion:ClaudeVerdictArtifact",
+        "at": "2026-09-20T18:06:07"
+      }
+    },
+    {
+      "beat_id": "BVD2",
+      "act": "verdict — what is not, and who did what",
+      "narration_text": "Not settled: one playtester, and he wrote the thing. Nobody has told us whether the sword and the shield read as props or as hitbox, and no check can. Not built, and not claimed: cherries, the three-zone course, sound, settings, moving platforms, a web export. So the next improvement is not code. Put this in front of somebody who has never seen it, and write down where they die. The human owns intent, scope, art direction and every judgment of feel. The A I implemented the authorised work, measured it, captured it, and narrated it.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 32,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "card",
+        "remotion": {
+          "pattern": "ClaudeVerdictArtifact",
+          "props": {
+            "artifactTitle": "Walker, Forked.",
+            "artifactHeading": "What is not settled, and who did what",
+            "artifactLines": [
+              "Uncertain: one playtester, the author. No first-time completion times, and no fairness or fun verdict from anyone else.",
+              "Whether the sword and shield read as props rather than hitbox is prediction F6, still open — no automated check can settle it.",
+              "Not built, and not claimed: cherries, the three-zone course, sound, settings and remapping, moving platforms, the Web export.",
+              "Next improvement: a first-time player, unobserved, with their death positions written down — not another automated check.",
+              "Human owns intent, scope, art direction and every judgment of feel. AI implemented the authorised work, measured it, captured it and narrated it."
+            ],
+            "durationSeconds": 28.92
+          },
+          "rendered": {
+            "out": "media/BVD2.mp4",
+            "at": "2026-09-20T21:59:42.021452+00:00"
+          }
+        }
+      },
+      "actual_duration_s": 28.92,
+      "audio_file": "mp3/beat-BVD2.mp3",
+      "render_duration_s": 28.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/BVD2.mp4",
+        "filled_by": "remotion:ClaudeVerdictArtifact",
+        "at": "2026-09-20T18:06:07"
+      }
+    },
+    {
+      "beat_id": "BHTF",
+      "act": "your turn handoff",
+      "narration_text": "Your turn. Here is the prompt — read it with me. Fork walker-link, keep tuning dot g d and the player collider byte for byte, and add a fourth section whose hardest jump is measured: print the take-off window in ticks instead of guessing it. The constraint is the exercise. If you cannot change the jump, you have to change the geometry — and then you have to measure it. My own arithmetic here was wrong by more than a factor of two, and the engine corrected me. Let it correct you. Liam, in for Bear.",
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 34,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "bookend",
+        "remotion": {
+          "pattern": "ClaudeComposerAsk",
+          "props": {
+            "greeting": "Your turn.",
+            "topic": "WALKER-LINK · GODOT 4.7 WALKTHROUGH",
+            "segment": "Walker, Forked.",
+            "command": "Fork walker-link, keep tuning.gd and the player collider byte-for-byte, and add a fourth section whose hardest jump is measured — print the take-off window in ticks instead of guessing it.",
+            "runningText": "paste this into your own Claude session…",
+            "folderLabel": "@NikBearBrown",
+            "modelLabel": "Opus 5",
+            "effortLabel": "High",
+            "durationSeconds": 26.92
+          },
+          "rendered": {
+            "out": "media/BHTF.mp4",
+            "at": "2026-09-20T21:08:49.856133+00:00"
+          }
+        }
+      },
+      "actual_duration_s": 26.92,
+      "audio_file": "mp3/beat-BHTF.mp3",
+      "render_duration_s": 26.933333333333334,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/BHTF.mp4",
+        "filled_by": "remotion:ClaudeComposerAsk",
+        "at": "2026-09-20T18:06:07"
+      }
+    },
+    {
+      "beat_id": "BOUT",
+      "act": "outro",
+      "role_note": "OUTRO-LOCK: title restate, @NikBearBrown hardcoded, slug-seeded mascot, NO subline. godot-waikthrough §3: the final card carries no narration and no gameplay audio. The stock jingle lives in svg/claude/mp3/, which is not present in this checkout (gitignored, never pushed) — recorded as an asset blocker in _qc/REPORT.md rather than substituted, so the card is silent.",
+      "narration_text": "",
+      "audio_policy": "silence",
+      "silent": true,
+      "voice": "am_onyx",
+      "engine": "kokoro",
+      "estimated_duration_s": 5,
+      "shot": {
+        "type": "REMOTION",
+        "lane": "bookend",
+        "remotion": {
+          "pattern": "ClaudeTitleOutro",
+          "props": {
+            "title": "Walker, Forked.",
+            "slug": "claude-liam-walker-link-walkthrough",
+            "durationSeconds": 5.0
+          },
+          "rendered": {
+            "out": "media/BOUT.mp4",
+            "at": "2026-09-20T21:09:10.358323+00:00"
+          }
+        }
+      },
+      "actual_duration_s": 5.0,
+      "render_duration_s": 5.0,
+      "build": {
+        "status": "VIDEO",
+        "src": "media/BOUT.mp4",
+        "filled_by": "remotion:ClaudeTitleOutro",
+        "at": "2026-09-20T18:06:07"
+      }
+    }
+  ]
+}
