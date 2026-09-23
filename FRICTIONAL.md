@@ -10,7 +10,8 @@ back through the Claude Code session transcripts, the fourteen commits on
 commit message, a named check, or an evidence file — not from memory. Where an entry records an
 impression of mine rather than a measurement, it says so. Nothing here is invented: where the record
 did not tell me something, I answered it myself rather than letting the AI guess, and where nobody
-knows the answer it is in §5 as an open question.
+knows the answer it is in §5 as an open question. §2.7 (the film) and the later rows of §6 were
+added on 2026-09-22, in the same retrospective way.
 
 **Tools and roles.** Claude Opus 5 in Claude Code (desktop) did the editing; I directed, played,
 judged and approved. Engine: Godot 4.7.2 on a MacBook Air M3 (macOS 15.1). The split is in §4.
@@ -219,6 +220,37 @@ rather than edited to 1. And the first draft's **Machine** row was the starter a
 (M4 Pro / macOS 26.5.1) copied out of BUILD-REPORT — plausible, wrong, and mine to catch. I did, and
 it was replaced with this machine's real values.
 
+### 2.7 The film (`31ca5a1`) — *added 2026-09-22, also retrospective*
+
+**What I did.** I asked Claude Code to use the course-provided Brutalist toolkit
+([nikbearbrown/brutalist.art](https://github.com/nikbearbrown/brutalist.art)): the `godot-walkthrough`
+workflow with the `walker` modifier (the skill's original spelling is `godot-waikthrough`). I told it
+to read the installed skill instructions and follow them. The full request as given to it is in
+[`BUILD-PROMPT.md`](youtube/claude-liam-walker-link-walkthrough/BUILD-PROMPT.md). Claude did the
+rest: the beat sheet, the script, the capture harness, the seven takes, the edit, the narration and
+the QC gates.
+
+**What happened, from my side.** It worked on the first pass. I reviewed the finished export and
+found nothing I wanted changed, so I accepted it as it was. I did not write or edit the script, the
+beat sheet or any shot myself.
+
+**What happened on Claude's side** (from its own records, not something I found):
+- It fixed two timing defects before handing the film over. A six-decimal rounding added a frame to
+  three beats, and B13 was being retimed by 1.000028.
+- It replaced the `ClaudeWindow` card in B07 with `ClaudeCodeBeat`, because the first used only 29 % of
+  the safe area.
+- It trimmed B03 and B09 and split the verdict card in two.
+- It kept the chasm take as shot rather than re-shooting it to match the prediction in CHANGE-BRIEF.
+  That was Claude's call under the skill's rules, which I ratified on review. The body of `31ca5a1`
+  wrongly says it was mine. SOURCES §7 has it right.
+
+All of this is in
+[`_qc/WALKTHROUGH-REVIEW.md`](youtube/claude-liam-walker-link-walkthrough/_qc/WALKTHROUGH-REVIEW.md)
+and [`RIFF.md`](youtube/claude-liam-walker-link-walkthrough/RIFF.md).
+
+**Still open.** The outro card is silent, because the locked jingle is not in the toolkit checkout.
+This was reported as a blocker rather than substituted, and I accepted that.
+
 ---
 
 ## 3. Predictions that measurement overturned
@@ -269,6 +301,10 @@ revision log; the in-game title.
 the fix was not the point, preserving the starter's picture was; and, after measurement, the
 two-route fork I had originally approved.
 
+**The film:** Claude made all of it by following the course skill; my part was the request and
+reviewing and accepting the export (§2.7). The film-side decisions are Claude's, ratified by me
+(SOURCES §7).
+
 **Where the AI refused to speak for me, correctly:** it would not write the hand-playtest table until
 I answered whether and how I had played; it did not invent a second playtester; it did not edit
 `human_playtest_sessions` from 0 to 1; and it stopped to ask which pit I meant instead of guessing.
@@ -286,6 +322,7 @@ I am satisfied I can explain every line of the change, including the parts I did
    there has been no second playtester.
 3. **The shield visibly hangs past the platform edge when standing at a ledge.** Seen in Step A's
    plates, deliberately left alone. Still open.
+4. **The film's outro card is silent.** The locked jingle is missing from the toolkit checkout (§2.7).
 
 ---
 
@@ -310,6 +347,16 @@ I am satisfied I can explain every line of the change, including the parts I did
 | `834af1a` | Starter's hills restored, whole hill at the finish; pixel diff as proof |
 | `b9b34d6` | Step D — WALKER / LINK, Section 03 label, copy, revision log, evidence |
 | `9586f41` | TEST-REPORT, today's re-run (34/0, 9/0), re-recorded manifest |
+| `19a7ddd` | This file. The film was captured at this revision |
+
+*Rows added 2026-09-22, after this file was first written:*
+
+| Commit | What it is |
+| --- | --- |
+| `78bc20e` | SOURCES.md: credits and the human/AI split |
+| `31ca5a1` | The film's beat sheet, script, coverage and input logs. Media kept out of git |
+| `118018e` | README: film name, SHA-256 and known limitations |
+| `d30b85b` | SOURCES §7: film-side decisions marked as the AI's, ratified by me on review |
 
 **Checks named in this log:** `step-is-jumped-not-stood-on`, `step-blocks-the-walk`,
 `step-spike-safe-strip`, `high-stone-reachable`, `stone-takeoff-sweep`, `hazard-art-matches-trigger`,
